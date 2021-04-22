@@ -25,7 +25,7 @@ namespace StockManager
             .PageSize(10)
             .MoreChoicesText("[grey](Move up and down to reveal more options)[/]")
             .AddChoice("New Order")
-            .AddChoice("Search For Item By Name")
+            .AddChoice("Show Items By Category")
             .AddChoice("Search For Item By Id")
             .AddChoice("Manager's Menu")
             .AddChoice("Exit"));
@@ -37,13 +37,21 @@ namespace StockManager
                     break;
                 case "Search For Item By Name":
                     Console.WriteLine("Enter Search: ");
-                    var name = Console.ReadLine();
-                    db.SearchForItemByName(name);
+                    var cat = Console.ReadLine();
+                    var result = db.SearchForItemByCat(cat);
+                    foreach (Item item in result)
+                    {
+                        Console.WriteLine($"ID: {item._id} Cat: {item.Cat} Qty: {item.Qty} {item.Detail} ${item.Price}");
+                    }
                     break;
                 case "Search For Item By Id":
                     Console.WriteLine("Enter Item ID: ");
                     var id = Console.ReadLine();
-                    db.SearchForItemByName(id);
+                    var output = db.SearchForItemById(id);
+                    foreach (Item item in output)
+                    {
+                        Console.WriteLine($"ID: {item._id} Qty: {item.Qty} {item.Detail} ${item.Price}");
+                    }
                     break;
                 case "Manager's Menu":
                     ManagersMenu();
@@ -69,7 +77,7 @@ namespace StockManager
             .MoreChoicesText("[grey](Move up and down to reveal more options)[/]")
             .AddChoice("Add Item To Stock")
             .AddChoice("View All Stock Items")
-            .AddChoice("Search For Item By Name")
+            .AddChoice("Show Items By Category")
             .AddChoice("Search For Item By Id")
             .AddChoice("Manager's Menu")
             .AddChoice("Exit"));
@@ -82,9 +90,9 @@ namespace StockManager
                     {
                         Console.Clear();
                         Console.WriteLine("Enter ID: ");
-                        var id = Console.ReadLine();
+                        var Id = Console.ReadLine();
                         Console.WriteLine("Enter Category: ");
-                        var cat = int.Parse(Console.ReadLine());
+                        var Cat = int.Parse(Console.ReadLine());
                         Console.WriteLine("Enter Quantity: ");
                         var qty = int.Parse(Console.ReadLine());
                         Console.WriteLine("Enter Price: ");
@@ -93,25 +101,37 @@ namespace StockManager
                         var detail = Console.ReadLine();
                         Console.WriteLine("Enter Sale Category: ");
                         var sale = int.Parse(Console.ReadLine());
-                        var newItem = new Item(id, cat, qty, price, detail, sale);
+                        var newItem = new Item(Id, Cat, qty, price, detail, sale);
                         db.AddItem(newItem);
                         Console.WriteLine("Item added to stock, add another item - 'Y' or 'N'?");
                         choice = Console.ReadLine();
                     } while (choice.ToUpper() == "Y");
                     ManagersMenu();
                     break;
-                case "Search For Item By Name":
+                case "Show Items By Category":
                     Console.WriteLine("Enter Search: ");
-                    var name = Console.ReadLine();
-                    db.SearchForItemByName(name);
+                    var cat = Console.ReadLine();
+                    var result = db.SearchForItemByCat(cat);
+                    foreach (Item item in result)
+                    {
+                        Console.WriteLine($"ID: {item._id} Qty: {item.Qty} {item.Detail} ${item.Price}");
+                    }
                     break;
                 case "Search For Item By Id":
                     Console.WriteLine("Enter Item ID: ");
-                    var search = Console.ReadLine();
-                    db.SearchForItemByName(search);
+                    var id = Console.ReadLine();
+                    var output = db.SearchForItemById(id);
+                    foreach (Item item in output)
+                    {
+                        Console.WriteLine($"ID: {item._id} Qty: {item.Qty} {item.Detail} ${item.Price}");
+                    }
                     break;
-                case "Manager's Menu":
-                    ManagersMenu();
+                case "View All Stock Items":
+                    var allresults = db.ShowAllItems();
+                    foreach(Item search in allresults)
+                    {
+                        Console.WriteLine($"ID: {search._id} Cat: {search.Cat} Qty: {search.Qty} {search.Detail} ${search.Price}");
+                    }
                     break;
                 default:
                     Environment.Exit(0);

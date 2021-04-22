@@ -34,14 +34,14 @@ namespace StockManager
             return results;
         }
 
-        public static List<Item> SearchForItemByName(string name)
+        public static List<Item> SearchForItemByCat(string cat)
         {
             var cString = ConfigurationManager.ConnectionStrings["DBconnection"].ConnectionString;
             var client = new MongoClient(cString);
             var database = client.GetDatabase("ItemDB");
             var coll = database.GetCollection<Item>("StockDB");
 
-            var filter = Builders<Item>.Filter.Eq("LastName", name);
+            var filter = Builders<Item>.Filter.Eq("Cat", cat);
 
             var results = coll.Find(filter).ToList();
 
