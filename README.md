@@ -19,3 +19,7 @@ To-do:
  - Search for item by name - I can currently only do this by using the full description string
  - View orders for day, total sales etc.
  - Add more items to DB
+
+Find me here on GitHub at github.com/simonchalder on Twitter at twitter.com/ChalderSimon and on Mastodon at cybersi_io@fosstodon.org
+
+Friendly criticism always appreciated!
