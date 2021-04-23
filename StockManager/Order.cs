@@ -87,10 +87,23 @@ namespace StockManager
                     Console.WriteLine("Firing up database, herding hamsters onto their wheels, please wait....");
                     var result1 = db.SearchForItemByCat(cat);
                     Console.Clear();
+
+                    var table = new Table();
+
+                    // Add some columns
+                    table.AddColumn("ID");
+                    table.AddColumn("Qty");
+                    table.AddColumn("Detail");
+                    table.AddColumn("Price");
+
                     foreach (Item item in result1)
                     {
-                        Console.WriteLine($"ID: {item._id} Cat: {item.Cat} Qty: {item.Qty} {item.Detail} ${item.Price}");
+                        table.AddRow(item._id.ToString(), item.Qty.ToString(), item.Detail.ToString(), item.Price.ToString());
                     }
+
+                    // Render the table to the console
+                    AnsiConsole.Render(table);
+
                     Console.WriteLine("Enter Id and press ENTER to add item it order");
                     var orderId1 = Console.ReadLine();
                     this.AddToOrder(orderId1);
@@ -107,12 +120,21 @@ namespace StockManager
             Console.Clear();
             Console.WriteLine("*** Current Order ***\n");
             decimal total = 0.00M;
+            var table = new Table();
+
+            // Add some columns
+            table.AddColumn("Detail");
+            table.AddColumn("Price");
+
             foreach (Item item in this.GetList())
             {
-                Console.WriteLine($"{item.Detail}\t\t\t£{item.Price}");
+                table.AddRow(item.Detail.ToString(), item.Price.ToString());
                 total += item.Price;
             }
-            Console.WriteLine($"\nOrder Total: \t\t\t£{total}");
+
+            // Render the table to the console
+            AnsiConsole.Render(table);
+            Console.WriteLine($"\nOrder Total: \t£{total}\n");
             return total;
         }
 

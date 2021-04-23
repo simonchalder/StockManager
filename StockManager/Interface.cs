@@ -48,13 +48,26 @@ namespace StockManager
                 case "Show Items By Category":
                     Console.WriteLine("Enter Category: ");
                     var cat = Console.ReadLine();
-                    Console.WriteLine("Searching.....");
-                    var result = db.SearchForItemByCat(cat);
                     Console.Clear();
-                    foreach (Item item in result)
+                    Console.WriteLine("Firing up database, herding hamsters onto their wheels, please wait....");
+                    var result1 = db.SearchForItemByCat(cat);
+                    Console.Clear();
+
+                    var table = new Table();
+
+                    // Add some columns
+                    table.AddColumn("ID");
+                    table.AddColumn("Qty");
+                    table.AddColumn("Detail");
+                    table.AddColumn("Price");
+
+                    foreach (Item item in result1)
                     {
-                        Console.WriteLine($"ID: {item._id} \tQty: {item.Qty} \t{item.Detail} \t${item.Price}");
+                        table.AddRow(item._id.ToString(), item.Qty.ToString(), item.Detail.ToString(), item.Price.ToString());
                     }
+
+                    // Render the table to the console
+                    AnsiConsole.Render(table);
                     Console.WriteLine("Press any key to return to main menu");
                     Console.ReadKey();
                     Console.Clear();
@@ -63,13 +76,26 @@ namespace StockManager
                 case "Search For Item By Id":
                     Console.WriteLine("Enter Item ID: ");
                     var id = Console.ReadLine();
-                    Console.WriteLine("Searching.....");
-                    var output = db.SearchForItemById(id);
                     Console.Clear();
-                    foreach (Item item in output)
+                    Console.WriteLine("Firing up database, herding hamsters onto their wheels, please wait....");
+                    var result2 = db.SearchForItemById(id);
+                    Console.Clear();
+
+                    var table2 = new Table();
+
+                    // Add some columns
+                    table2.AddColumn("ID");
+                    table2.AddColumn("Qty");
+                    table2.AddColumn("Detail");
+                    table2.AddColumn("Price");
+
+                    foreach (Item item in result2)
                     {
-                        Console.WriteLine($"ID: {item._id} Qty: {item.Qty} {item.Detail} ${item.Price}");
+                        table2.AddRow(item._id.ToString(), item.Qty.ToString(), item.Detail.ToString(), item.Price.ToString());
                     }
+
+                    // Render the table to the console
+                    AnsiConsole.Render(table2);
                     Console.WriteLine("Press any key to return to main menu");
                     Console.ReadKey();
                     Console.Clear();
@@ -161,11 +187,28 @@ namespace StockManager
                     }
                     break;
                 case "View All Stock Items":
+                    Console.Clear();
+                    Console.WriteLine("Firing up database, herding hamsters onto their wheels, please wait....");
                     var allresults = db.ShowAllItems();
-                    foreach(Item search in allresults)
+
+                    var table = new Table();
+
+                    // Add some columns
+                    table.AddColumn("ID");
+                    table.AddColumn("Qty");
+                    table.AddColumn("Detail");
+                    table.AddColumn("Price");
+
+                    foreach (Item item in allresults)
                     {
-                        Console.WriteLine($"ID: {search._id} Cat: {search.Cat} Qty: {search.Qty} {search.Detail} ${search.Price}");
+                        table.AddRow(item._id.ToString(), item.Qty.ToString(), item.Detail.ToString(), item.Price.ToString());
                     }
+
+                    // Render the table to the console
+                    AnsiConsole.Render(table);
+                    Console.WriteLine("Press any key to return to menu");
+                    Console.ReadKey();
+                    ManagersMenu();
                     break;
                 default:
                     WelcomeScreen();
