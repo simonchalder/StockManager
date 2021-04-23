@@ -53,7 +53,7 @@ namespace StockManager
                     Console.Clear();
                     foreach (Item item in result)
                     {
-                        Console.WriteLine($"ID: {item._id} Cat: {item.Cat} Qty: {item.Qty} {item.Detail} ${item.Price}");
+                        Console.WriteLine($"ID: {item._id} \tQty: {item.Qty} \t{item.Detail} \t${item.Price}");
                     }
                     Console.WriteLine("Press any key to return to main menu");
                     Console.ReadKey();
@@ -88,18 +88,16 @@ namespace StockManager
 
         public void NewOrder() // Method to be run when a new order is created via the menu
         {
+            var newOrder = new Order(); // new order object created from Order class
             var cat = "";
             do
-            {
-                var newOrder = new Order(); // new order object created from Order class
+            {                
                 Console.Clear();
-
+                newOrder.ShowOrder();
                 cat = newOrder.ShowCategories(); // Show categories menu and store selection in cat variable
                 newOrder.SelectItems(cat); // Show items from the selected category. Output from above line passed as argument. Will loop until order is finished
-                newOrder.ShowOrder(); // Display order and total so far on screen. Returns order total as decimal
-                cat = newOrder.ShowCategories(); // Order menu displayed again so user can select another category or finalise order
+
             } while (cat != "X"); // Menu will loop until user quits of finalises the order
-            
         }
 
         //----------------- Managers Menu Method ------------------------------------------------
@@ -116,8 +114,7 @@ namespace StockManager
             .AddChoice("View All Stock Items")
             .AddChoice("Show Items By Category")
             .AddChoice("Search For Item By Id")
-            .AddChoice("Manager's Menu")
-            .AddChoice("Exit"));
+            .AddChoice("Exit To Main Menu"));
 
             switch (select)
             {
@@ -171,7 +168,7 @@ namespace StockManager
                     }
                     break;
                 default:
-                    Environment.Exit(0);
+                    WelcomeScreen();
                     break;
             }
         }

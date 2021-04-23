@@ -27,30 +27,34 @@ namespace StockManager
             .Title("Please choose an option:")
             .PageSize(10)
             .MoreChoicesText("[grey](Move up and down to reveal more options)[/]")
-            .AddChoice("Category 1")
-            .AddChoice("Category 2")
-            .AddChoice("Category 3")
-            .AddChoice("Category 4")
-            .AddChoice("Category 5")
+            .AddChoice("Cables & Connectors")
+            .AddChoice("Components")
+            .AddChoice("Peripherals")
+            .AddChoice("Displays")
+            .AddChoice("Networking")
+            .AddChoice("Desktop & Laptop Systems")
             .AddChoice("Finalise Order")
             .AddChoice("Exit"));
             var catChoice = "";
             switch (select)
             {
-                case "Category 1": // Case should use single quotes
+                case "Cables & Connectors": // Case should use single quotes
                     catChoice = "1";
                     break;
-                case "Category 2":
+                case "Components":
                     catChoice = "2";
                     break;
-                case "Category 3":
+                case "Peripherals":
                     catChoice = "3";
                     break;
-                case "Category 4":
+                case "Displays":
                     catChoice = "4";
                     break;
-                case "Category 5":
+                case "Networking":
                     catChoice = "5";
+                    break;
+                case "Desktop & Laptop Systems":
+                    catChoice = "6";
                     break;
                 case "Finalise Order":
                     this.FinaliseOrder(this.ShowOrder());
@@ -134,6 +138,8 @@ namespace StockManager
             {
                 db.updateStock(item._id, item.Qty);
             }
+            Console.WriteLine("Order finalised, press any key to return to main menu");
+            Console.ReadKey();
             var newInterface = new Interface();
             newInterface.WelcomeScreen();
         }
