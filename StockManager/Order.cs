@@ -59,7 +59,8 @@ namespace StockManager
                     Console.ReadKey();
                     break;
                 default:
-                    Console.WriteLine("Exit");
+                    Console.WriteLine("Order cancelled, press any key to return to main menu");
+                    Console.ReadKey();
                     catChoice = "X";
                     break;
             }
@@ -68,22 +69,33 @@ namespace StockManager
 
         public void SelectItems(string cat)
         {
-            var choice1 = "";
-            do
+            if(cat == "X")
             {
-                Console.Clear();
-                var result1 = db.SearchForItemByCat(cat);
-                foreach (Item item in result1)
-                {
-                    Console.WriteLine($"ID: {item._id} Cat: {item.Cat} Qty: {item.Qty} {item.Detail} ${item.Price}");
-                }
-                Console.WriteLine("Enter Id and press ENTER to add item it order");
-                var orderId1 = Console.ReadLine();
-                this.AddToOrder(orderId1);
-                Console.WriteLine("Add another item from this category?");
-                choice1 = Console.ReadLine();
+                var newInterface = new Interface();
+                newInterface.WelcomeScreen();
             }
-            while (choice1.ToUpper() == "Y");
+            else
+            {
+                var choice1 = "";
+                do
+                {
+                    Console.Clear();
+                    Console.WriteLine("Firing up database, herding hamsters onto their wheels, please wait....");
+                    var result1 = db.SearchForItemByCat(cat);
+                    Console.Clear();
+                    foreach (Item item in result1)
+                    {
+                        Console.WriteLine($"ID: {item._id} Cat: {item.Cat} Qty: {item.Qty} {item.Detail} ${item.Price}");
+                    }
+                    Console.WriteLine("Enter Id and press ENTER to add item it order");
+                    var orderId1 = Console.ReadLine();
+                    this.AddToOrder(orderId1);
+                    Console.WriteLine("Add another item from this category?");
+                    choice1 = Console.ReadLine();
+                }
+                while (choice1.ToUpper() == "Y");
+            }
+            
         }
 
         public decimal ShowOrder()
