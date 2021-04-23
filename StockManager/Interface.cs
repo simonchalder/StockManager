@@ -10,6 +10,7 @@ namespace StockManager
     {
         public void WelcomeScreen()
         {
+            Console.Clear();
             AnsiConsole.Render(
             new FigletText("Acme Stores")
             .LeftAligned()
@@ -64,11 +65,17 @@ namespace StockManager
 
         public void NewOrder()
         {
-            var newOrder = new Order();
-            Console.Clear();
-            var cat = newOrder.ShowCategories();
-            newOrder.SelectItems(cat);
-            newOrder.ShowOrder();
+            var cat = "";
+            do
+            {
+                var newOrder = new Order();
+                Console.Clear();
+                cat = newOrder.ShowCategories();
+                newOrder.SelectItems(cat);
+                newOrder.ShowOrder();
+                cat = newOrder.ShowCategories();
+            } while (cat != "X");
+            
         }
 
         public void ManagersMenu()
