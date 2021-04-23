@@ -64,7 +64,11 @@ namespace StockManager
 
         public void NewOrder()
         {
-
+            var newOrder = new Order();
+            Console.Clear();
+            var cat = newOrder.ShowCategories();
+            newOrder.SelectItems(cat);
+            newOrder.ShowOrder();
         }
 
         public void ManagersMenu()
@@ -138,5 +142,7 @@ namespace StockManager
                     break;
             }
         }
+
+        
     }
 }

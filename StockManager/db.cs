@@ -61,5 +61,17 @@ namespace StockManager
 
             return results;
         }
+
+        public static void updateStock(string id, int qty)
+        {
+            var cString = ConfigurationManager.ConnectionStrings["DBconnection"].ConnectionString;
+            var client = new MongoClient(cString);
+            var database = client.GetDatabase("ItemDB");
+            var coll = database.GetCollection<Item>("StockDB");
+            var newQty = qty - 1;
+            var filter = Builders<Item>.Filter.Eq("_id", id);
+            var update = Builders<Item>.Update.Set("Qty", newQty);
+            coll.UpdateOne(filter, update);
+        }
     }
 }
